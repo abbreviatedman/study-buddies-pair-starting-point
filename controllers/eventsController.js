@@ -16,12 +16,15 @@ events.get("/", async (req, res) => {
     if (allEvents[0]) {
       res.status(200).json(allEvents);
     } else {
-      res.status(500).json({ error: 'Must have a group id to see events associated with a group' });
+      res
+        .status(500)
+        .json({
+          error: "Must have a group id to see events associated with a group",
+        });
     }
-  } catch(error){
+  } catch (error) {
     res.status(500).json({ error: error });
   }
-
 });
 
 // Create
@@ -46,6 +49,8 @@ events.post("/", async (req, res) => {
 events.get("/:id", async (req, res) => {
   try {
     const oneEvent = await getEvent(req.params.id);
+    oneEvent.start_time = dateTime(oneEvent.start_time);
+    oneEvent.end_time = dateTime(oneEvent.end_time);
     res.status(200).json(oneEvent);
   } catch (error) {
     res.status(500).json({ error: error });
