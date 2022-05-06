@@ -9,7 +9,8 @@ const {
   updateGroup,
 } = require("../queries/groups.js");
 
-const {getAllEvents, createEvent} = require('../queries/events.js')
+const { getAllEvents, createEvent } = require("../queries/events.js");
+const { dateTime } = require("../date-helper.js");
 // Index of Groups
 groups.get("/", async (req, res) => {
   const allGroups = await getAllGroups();
@@ -27,12 +28,11 @@ groups.get("/:id/events", async (req, res) => {
     if (allEvents[0]) {
       res.status(200).json(allEvents);
     } else {
-      res.status(500).json({ error: 'no events found'});
+      res.status(500).json({ error: "no events found" });
     }
   } catch (error) {
     res.status(500).json({ error: error });
   }
-
 });
 
 // Create Group
